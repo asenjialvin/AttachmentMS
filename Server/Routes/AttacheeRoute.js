@@ -15,7 +15,7 @@ router.post("/attachee_login", (req, res) => {
             if(response) {
                 const email = result[0].email;
                 const token = jwt.sign(
-                    { role: "employee", email: email, id: result[0].id },
+                    { role: "attachee", email: email, id: result[0].id },
                     "jwt_secret_key",
                     { expiresIn: "1d" }
                 );
@@ -32,7 +32,7 @@ router.post("/attachee_login", (req, res) => {
 
   router.get('/detail/:id', (req, res) => {
     const id = req.params.id;
-    const sql = "SELECT * FROM employee where id = ?"
+    const sql = "SELECT * FROM attachee where id = ?"
     con.query(sql, [id], (err, result) => {
         if(err) return res.json({Status: false});
         return res.json(result)
@@ -44,4 +44,4 @@ router.post("/attachee_login", (req, res) => {
     return res.json({Status: true})
   })
 
-  export {router as EmployeeRouter}
+  export {router as AttacheeRouter}
