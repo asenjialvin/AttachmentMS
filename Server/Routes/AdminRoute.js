@@ -56,8 +56,8 @@ const upload = multer({
 })
 // end imag eupload 
 
-router.post('/add_employee',upload.single('image'), (req, res) => {
-    const sql = `INSERT INTO employee 
+router.post('/add_attachee',upload.single('image'), (req, res) => {
+    const sql = `INSERT INTO attachee 
     (name,email,password, address, salary,image, category_id) 
     VALUES (?)`;
     bcrypt.hash(req.body.password, 10, (err, hash) => {
@@ -78,26 +78,26 @@ router.post('/add_employee',upload.single('image'), (req, res) => {
     })
 })
 
-router.get('/employee', (req, res) => {
-    const sql = "SELECT * FROM employee";
+router.get('/attachee', (req, res) => {
+    const sql = "SELECT * FROM attachee";
     con.query(sql, (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
         return res.json({Status: true, Result: result})
     })
 })
 
-router.get('/employee/:id', (req, res) => {
+router.get('/attachee/:id', (req, res) => {
     const id = req.params.id;
-    const sql = "SELECT * FROM employee WHERE id = ?";
+    const sql = "SELECT * FROM attachee WHERE id = ?";
     con.query(sql,[id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
         return res.json({Status: true, Result: result})
     })
 })
 
-router.put('/edit_employee/:id', (req, res) => {
+router.put('/edit_attachee/:id', (req, res) => {
     const id = req.params.id;
-    const sql = `UPDATE employee 
+    const sql = `UPDATE attachee 
         set name = ?, email = ?, salary = ?, address = ?, category_id = ? 
         Where id = ?`
     const values = [
@@ -113,9 +113,9 @@ router.put('/edit_employee/:id', (req, res) => {
     })
 })
 
-router.delete('/delete_employee/:id', (req, res) => {
+router.delete('/delete_attachee/:id', (req, res) => {
     const id = req.params.id;
-    const sql = "delete from employee where id = ?"
+    const sql = "delete from attachee where id = ?"
     con.query(sql,[id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})
@@ -130,8 +130,8 @@ router.get('/admin_count', (req, res) => {
     })
 })
 
-router.get('/employee_count', (req, res) => {
-    const sql = "select count(id) as employee from employee";
+router.get('/attachee_count', (req, res) => {
+    const sql = "select count(id) as attachee from attachee";
     con.query(sql, (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})
@@ -139,7 +139,7 @@ router.get('/employee_count', (req, res) => {
 })
 
 router.get('/salary_count', (req, res) => {
-    const sql = "select sum(salary) as salaryOFEmp from employee";
+    const sql = "select sum(salary) as salaryOFEmp from attachee";
     con.query(sql, (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})

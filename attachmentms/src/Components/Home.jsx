@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react'
 
 const Home = () => {
   const [adminTotal, setAdminTotal] = useState(0)
-  const [employeeTotal, setemployeeTotal] = useState(0)
+  const [attacheeTotal, setAttachee] = useState(0)
   const [salaryTotal, setSalaryTotal] = useState(0)
   const [admins, setAdmins] = useState([])
 
   useEffect(() => {
     adminCount();
-    employeeCount();
+    attacheeCount();
     salaryCount();
     AdminRecords();
   }, [])
@@ -32,11 +32,11 @@ const Home = () => {
       }
     })
   }
-  const employeeCount = () => {
-    axios.get('http://localhost:3000/auth/employee_count')
+  const attacheeCount = () => {
+    axios.get('http://localhost:3000/auth/attachee_count')
     .then(result => {
       if(result.data.Status) {
-        setemployeeTotal(result.data.Result[0].employee)
+        setattacheeTotal(result.data.Result[0].attachee)
       }
     })
   }
@@ -65,12 +65,12 @@ const Home = () => {
         </div>
         <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
           <div className='text-center pb-1'>
-            <h4>Employee</h4>
+            <h4>Attachee</h4>
           </div>
           <hr />
           <div className='d-flex justify-content-between'>
             <h5>Total:</h5>
-            <h5>{employeeTotal}</h5>
+            <h5>{attacheeTotal}</h5>
           </div>
         </div>
         <div className='px-3 pt-2 pb-3 border shadow-sm w-25'>
