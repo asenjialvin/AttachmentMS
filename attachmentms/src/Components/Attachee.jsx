@@ -19,7 +19,7 @@ const Attachee = () => {
       .catch((err) => console.log(err));
   }, []);
   const handleDelete = (id) => {
-    axios.delete('http://localhost:3000/auth/delete_attachee/'+id)
+    axios.delete('http://localhost:3000/auth/delete_attachee/'+attachee_id)
     .then(result => {
         if(result.data.Status) {
             window.location.reload()
@@ -44,33 +44,37 @@ const Attachee = () => {
               <th>Image</th>
               <th>Email</th>
               <th>Address</th>
+              <th>Institution</th>
               <th>Salary</th>
+              <th>Category</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {attachee.map((e) => (
               <tr>
-                <td>{e.name}</td>
+                <td>{e.attachee_name}</td>
                 <td>
                   <img
-                    src={`http://localhost:3000/Images/` + e.image}
+                    src={`http://localhost:3000/Images/` + e.attachee_image}
                     className="attachee_image"
                   />
                 </td>
-                <td>{e.email}</td>
-                <td>{e.address}</td>
-                <td>{e.salary}</td>
+                <td>{e.attachee_email}</td>
+                <td>{e.attachee_address}</td>
+                <td>{e.attachee_institution}</td>
+                <td>{e.attachee_salary}</td>
+                <td>{e.category_name}</td>
                 <td>
                   <Link
-                    to={`/dashboard/edit_attachee/` + e.id}
+                    to={`/dashboard/edit_attachee/` + e.attachee_id}
                     className="btn btn-info btn-sm me-2"
                   >
                     Edit
                   </Link>
                   <button
                     className="btn btn-warning btn-sm"
-                    onClick={() => handleDelete(e.id)}
+                    onClick={() => handleDelete(e.attachee_id)}
                   >
                     Delete
                   </button>

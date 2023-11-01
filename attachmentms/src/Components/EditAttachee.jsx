@@ -9,6 +9,7 @@ const EditAttachee = () => {
         email: "",
         salary: "",
         address: "",
+        institution: "",
         category_id: "",
       });
       const [category, setCategory] = useState([])
@@ -31,6 +32,7 @@ const EditAttachee = () => {
                 name: result.data.Result[0].name,
                 email: result.data.Result[0].email,
                 address: result.data.Result[0].address,
+                institution: result.data.Result[0].institution,
                 salary: result.data.Result[0].salary,
                 category_id: result.data.Result[0].category_id,
             })
@@ -117,6 +119,23 @@ const EditAttachee = () => {
               }
             />
           </div>
+          <div className="col-12">
+            <label for="inputInstitution" className="form-label">
+              Institution
+            </label>
+            <input
+              type="text"
+              className="form-control rounded-0"
+              id="inputInstitution"
+              placeholder="Institution"
+              autoComplete="off"
+              value={attachee.institution}
+              onChange={(e) =>
+                setAttachee({ ...attachee, institution: e.target.value })
+              }
+            />
+          </div>
+
           <div className="col-12">
             <label for="category" className="form-label">
               Category

@@ -33,7 +33,7 @@ const Category = () => {
                     {
                         category.map(c => (
                             <tr>
-                                <td>{c.name}</td>
+                                <td>{c.category_name}</td>
                             </tr>
                         ))
                     }

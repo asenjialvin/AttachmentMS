@@ -33,6 +33,7 @@ const AttacheeDetail = () => {
             <div className='d-flex align-items-center flex-column mt-5'>
                 <h3>Name: {attachee.name}</h3>
                 <h3>Email: {attachee.email}</h3>
+                <h3>Institution: {attachee.institution}</h3>
                 <h3>Salary: ${attachee.salary}</h3>
             </div>
             <div>
