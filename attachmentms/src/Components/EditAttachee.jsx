@@ -5,11 +5,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 const EditAttachee = () => {
     const {id} = useParams()
     const [attachee, setAttachee] = useState({
-        name: "",
-        email: "",
-        salary: "",
-        address: "",
-        institution: "",
+        attachee_name: "",
+        attachee_email: "",
+        attachee_address: "",
+        attachee_institution: "",
+        attachee_salary: "",
         category_id: "",
       });
       const [category, setCategory] = useState([])
@@ -29,11 +29,11 @@ const EditAttachee = () => {
         .then(result => {
             setAttachee({
                 ...attachee,
-                name: result.data.Result[0].name,
-                email: result.data.Result[0].email,
-                address: result.data.Result[0].address,
-                institution: result.data.Result[0].institution,
-                salary: result.data.Result[0].salary,
+                attachee_name: result.data.Result[0].attachee_name,
+                attachee_email: result.data.Result[0].attachee_email,
+                attachee_address: result.data.Result[0].attachee_address,
+                attachee_institution: result.data.Result[0].attachee_institution,
+                attachee_salary: result.data.Result[0].attachee_salary,
                 category_id: result.data.Result[0].category_id,
             })
         }).catch(err => console.log(err))
@@ -65,9 +65,9 @@ const EditAttachee = () => {
               className="form-control rounded-0"
               id="inputName"
               placeholder="Enter Name"
-              value={attachee.name}
+              value={attachee.attachee_name}
               onChange={(e) =>
-                setAttachee({ ...attachee, name: e.target.value })
+                setAttachee({ ...attachee, attachee_name: e.target.value })
               }
             />
           </div>
@@ -81,9 +81,9 @@ const EditAttachee = () => {
               id="inputEmail4"
               placeholder="Enter Email"
               autoComplete="off"
-              value={attachee.email}
+              value={attachee.attachee_email}
               onChange={(e) =>
-                setAttachee({ ...attachee, email: e.target.value })
+                setAttachee({ ...attachee, attachee_email: e.target.value })
               }
             />
           </div>
@@ -97,9 +97,9 @@ const EditAttachee = () => {
               id="inputSalary"
               placeholder="Enter Salary"
               autoComplete="off"
-              value={attachee.salary}
+              value={attachee.attachee_salary}
               onChange={(e) =>
-                setAttachee({ ...attachee, salary: e.target.value })
+                setAttachee({ ...attachee, attachee_salary: e.target.value })
               }
             />
           </div>
@@ -113,9 +113,9 @@ const EditAttachee = () => {
               id="inputAddress"
               placeholder="1234 Main St"
               autoComplete="off"
-              value={attachee.address}
+              value={attachee.attachee_address}
               onChange={(e) =>
-                setAttachee({ ...attachee, address: e.target.value })
+                setAttachee({ ...attachee, attachee_address: e.target.value })
               }
             />
           </div>
@@ -129,9 +129,9 @@ const EditAttachee = () => {
               id="inputInstitution"
               placeholder="Institution"
               autoComplete="off"
-              value={attachee.institution}
+              value={attachee.attachee_institution}
               onChange={(e) =>
-                setAttachee({ ...attachee, institution: e.target.value })
+                setAttachee({ ...attachee, attachee_institution: e.target.value })
               }
             />
           </div>
@@ -143,7 +143,7 @@ const EditAttachee = () => {
             <select name="category" id="category" className="form-select"
                 onChange={(e) => setAttachee({...attachee, category_id: e.target.value})}>
               {category.map((c) => {
-                return <option value={c.id}>{c.name}</option>;
+                return <option value={c.category_id}>{c.category_name}</option>;
               })}
             </select>
           </div>

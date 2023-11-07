@@ -7,6 +7,7 @@ import path from "path";
 
 const router = express.Router();
 
+// Admin Login
 router.post("/adminlogin", (req, res) => {
   const sql = "SELECT * from admin Where email = ? and password = ?";
   con.query(sql, [req.body.email, req.body.password], (err, result) => {
@@ -26,6 +27,7 @@ router.post("/adminlogin", (req, res) => {
   });
 });
 
+// View Category
 router.get('/category', (req, res) => {
     const sql = "SELECT * FROM category";
     con.query(sql, (err, result) => {
@@ -34,6 +36,7 @@ router.get('/category', (req, res) => {
     })
 })
 
+// Add Category
 router.post('/add_category', (req, res) => {
     const sql = "INSERT INTO category (`category_name`) VALUES (?)"
     con.query(sql, [req.body.category], (err, result) => {
@@ -56,9 +59,10 @@ const upload = multer({
 })
 // end image upload 
 
+// Start of AddAttachee
 router.post('/add_attachee',upload.single('attachee_image'), (req, res) => {
     const sql = `INSERT INTO attachee \
-    (attachee_name,attachee_email,attachee_password,attachee_address,attachee_institution,attachee_salary,attachee_image,category_name) \
+    (attachee_name,attachee_email,attachee_password,attachee_address,attachee_institution,attachee_salary,attachee_image,category_id) \
     VALUES (?)`;
     bcrypt.hash(req.body.attachee_password, 10, (err, hash) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
@@ -68,9 +72,9 @@ router.post('/add_attachee',upload.single('attachee_image'), (req, res) => {
             hash,
             req.body.attachee_address,
             req.body.attachee_institution,
-            req.body.attachee_salary, 
+            req.body.attachee_salary,
             req.file.filename,
-            req.body.category_id
+            req.body.category_id,
         ]
         con.query(sql, [values], (err, result) => {
             if(err) return res.json({Status: false, Error: err})
@@ -78,7 +82,9 @@ router.post('/add_attachee',upload.single('attachee_image'), (req, res) => {
         })
     })
 })
+// End of AddAttachee
 
+// View attachees
 router.get('/attachee', (req, res) => {
     const sql = "SELECT * FROM attachee";
     con.query(sql, (err, result) => {
@@ -87,26 +93,28 @@ router.get('/attachee', (req, res) => {
     })
 })
 
+// Get attachee by attachee_id
 router.get('/attachee/:attachee_id', (req, res) => {
-    const id = req.params.attachee_id;
+    const id = req.params.id;
     const sql = "SELECT * FROM attachee WHERE attachee_id = ?";
-    con.query(sql,[attachee_id], (err, result) => {
+    con.query(sql,[id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
         return res.json({Status: true, Result: result})
     })
 })
 
+// Edit attachee based on attachee_id
 router.put('/edit_attachee/:attachee_id', (req, res) => {
-    const id = req.params.attachee_id;
+    const id = req.params.id;
     const sql = `UPDATE attachee 
-        set attachee_name = ?, attachee_email = ?, attachee_salary = ?, attachee_address = ?, attachee_institution = ?, category_id = ? 
+        set attachee_name = ?, attachee_email = ?, attachee_address = ?, attachee_institution = ?, attachee_salary = ?, category_id = ? 
         Where attachee_id = ?`
     const values = [
         req.body.attachee_name,
         req.body.attachee_email,
-        req.body.attachee_salary,
         req.body.attachee_address,
         req.body.attachee_institution,
+        req.body.attachee_salary,
         req.body.category_id
     ]
     con.query(sql,[...values, id], (err, result) => {
@@ -114,16 +122,19 @@ router.put('/edit_attachee/:attachee_id', (req, res) => {
         return res.json({Status: true, Result: result})
     })
 })
+// End of EditAttachee
 
+// Delete Attachee
 router.delete('/delete_attachee/:attachee_id', (req, res) => {
-    const id = req.params.attachee_id;
-    const sql = "delete from attachee where attachee_id = ?"
+    const id = req.params.id;
+    const sql = 'DELETE FROM attachee WHERE attachee.attachee_id =?';
     con.query(sql,[id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})
     })
 })
 
+// Count number of Admins
 router.get('/admin_count', (req, res) => {
     const sql = "select count(id) as admin from admin";
     con.query(sql, (err, result) => {
@@ -148,6 +159,7 @@ router.get('/salary_count', (req, res) => {
     })
 })
 
+// View all Admins
 router.get('/admin_records', (req, res) => {
     const sql = "select * from admin"
     con.query(sql, (err, result) => {
