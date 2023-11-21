@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const EditAttachee = () => {
-    const {id} = useParams()
+    const {attachee_id} = useParams()
     const [attachee, setAttachee] = useState({
         attachee_name: "",
         attachee_email: "",
@@ -25,7 +25,7 @@ const EditAttachee = () => {
             }
         }).catch(err => console.log(err))
 
-        axios.get('http://localhost:3000/auth/attachee/'+id)
+        axios.get('http://localhost:3000/auth/attachee/'+attachee_id)
         .then(result => {
             setAttachee({
                 ...attachee,
@@ -41,7 +41,7 @@ const EditAttachee = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put('http://localhost:3000/auth/edit_attachee/'+id, attachee)
+        axios.put('http://localhost:3000/auth/edit_attachee/'+attachee_id, attachee)
         .then(result => {
             if(result.data.Status) {
                 navigate('/dashboard/attachee')
@@ -111,7 +111,7 @@ const EditAttachee = () => {
               type="text"
               className="form-control rounded-0"
               id="inputAddress"
-              placeholder="1234 Main St"
+              placeholder="P.O Box 123"
               autoComplete="off"
               value={attachee.attachee_address}
               onChange={(e) =>

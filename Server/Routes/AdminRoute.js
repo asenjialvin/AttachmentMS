@@ -107,8 +107,8 @@ router.get('/attachee/:attachee_id', (req, res) => {
 router.put('/edit_attachee/:attachee_id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE attachee 
-        set attachee_name = ?, attachee_email = ?, attachee_address = ?, attachee_institution = ?, attachee_salary = ?, category_id = ? 
-        Where attachee_id = ?`
+        SET attachee_name = ?, attachee_email = ?, attachee_address = ?, attachee_institution = ?, attachee_salary = ?, category_id = ? 
+        WHERE attachee_id = ?`;
     const values = [
         req.body.attachee_name,
         req.body.attachee_email,
